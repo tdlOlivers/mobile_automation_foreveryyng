@@ -30,7 +30,7 @@ else
       automationName: 'UiAutomator2',
       # systemPort: ENV['SYSTEM_PORT'],
       app: 'apk/4ever_yng.apk',
-      udid: ENV['DEVICE'],
+      udid: ENV['DEVICE'] || emulator - 5554,
       newCommandTimeout: 600
     },
     appium_lib: {
@@ -39,13 +39,15 @@ else
   }
 end
 
-$driver = Appium::Driver.new(opts, true)
+# $driver = Appium::Driver.new(opts, true)
 p Appium::Driver.method(:new).source_location
 Selenium::WebDriver.logger.level = :error
 
 Before do
-  $driver.start_driver
-  @screens = Screens.new
+  @driver = Appium::Driver.new(opts, true)
+
+  @driver.start_driver
+  @screens = Screens.new(driver: @driver)
 end
 
 After do |scenario|
@@ -55,14 +57,15 @@ After do |scenario|
     p 'Failed to add screenshot'
     p e.message
   end
-  $driver.quit_driver
+  @driver.quit_driver
 end
 
 def add_screenshot(scenario_name)
   scenario_name.tr!(' ', '_')
   local_name = "reports/screenshot-#{scenario_name}.png"
-  $driver.screenshot(local_name)
-  embed(local_name, 'image/png', 'SCREENSHOT')
+  @driver.screenshot(local_name)
+  # embed(local_name, 'image/png', 'SCREENSHOT')
+  attach(local_name, 'image/png')
 end
 
 # Auxillary

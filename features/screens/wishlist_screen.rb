@@ -3,10 +3,10 @@
 require_relative 'base_screen'
 
 # Class containing
-class WishlistScreen < BaseScreen
-  def initialize
-    @fully_visible_products = Elements.new(
-      :xpath,
+class WishlistScreen < Base
+  def initialize(driver:)
+    super
+    @fully_visible_products = xpath(
       "//*[@resource-id='com.view9.foreveryng:id/wishlist_rview']" \
       "//*[@resource-id='com.view9.foreveryng:id/materialCardView2']" \
       "[descendant::*[@resource-id='com.view9.foreveryng:id/textView6']]" \

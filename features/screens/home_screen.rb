@@ -2,20 +2,22 @@
 
 require_relative 'base_screen'
 
-class HomeScreen < BaseScreen
-  def initialize
+# HomeScreen class
+class HomeScreen < Base
+  def initialize(driver:)
     super
-    @logo_image = Elements.new(:id, 'logo')
-    @search_field = Elements.new(:id, 'search_view')
-    @wishlist_tab_button = Elements.new(:id, 'fav_nav')
-    @top_search_title = Elements.new(:xpath, "//android.widget.TextView[@text='TOP SEARCH']")
+    @logo_image = id('logo')
+    @search_field = id('search_view')
+    @wishlist_tab_button = id('fav_nav')
+    @top_search_title = text('TOP SEARCH')
+    @categories_title = text('Categories')
 
-    expected_element([@logo_image, @top_search_title])
+    expected_element([@categories_title, @top_search_title])
   end
 
   def click(element)
     super(element)
-    WishlistScreen.new.wait_to_load if element.eql?('wishlist_tab_button')
+    WishlistScreen.new(driver: @driver).wait_to_load if element.eql?('wishlist_tab_button')
   end
 
   def validate_screen
@@ -30,7 +32,7 @@ class HomeScreen < BaseScreen
   def open_top_searched_item_by_index(index)
     raise "Index out of bounds! Should be between 1 and 4, but is #{index}" if index < 1 || index > 4
 
-    top_searched_item = Elements.new(:xpath, "//*[@resource-id='com.view9.foreveryng:id/recommended_chip']/android.widget.Button[#{index}]")
+    top_searched_item = xpath("//*[@resource-id='com.view9.foreveryng:id/recommended_chip']/android.widget.Button[#{index}]")
     top_searched_item.click
   end
 

@@ -3,7 +3,7 @@
 require 'pry'
 
 When('I click {string}') do |element|
-  @screens.get_current.click(element.snakify)
+  @screens.current.click(element.snakify)
 end
 
 When('debug') do
@@ -11,10 +11,10 @@ When('debug') do
 end
 
 When('I {string} with the following data:') do |action, table|
-  @screens.get_current.send(action.snakify, table)
+  @screens.current.send(action.snakify, table)
 end
 
 Then('I am on the {string} screen') do |scr|
   p "Validating that we are on the following screen: #{scr} screen"
-  @screens.get_current.class.to_s.snakify.include?(scr.snakify)
+  @screens.current.class.to_s.snakify.include?(scr.snakify)
 end

@@ -3,22 +3,20 @@
 require_relative 'base_screen'
 
 # Class containing items for Product screem
-class ProductScreen < BaseScreen
-  def initialize
+class ProductScreen < Base
+  def initialize(driver:)
     super
-    @fully_visible_products = Elements.new(
-      :xpath,
+    @fully_visible_products = xpath(
       "//*[@resource-id='com.view9.foreveryng:id/product_r_view']" \
       "//*[@resource-id='com.view9.foreveryng:id/materialCardView2']" \
       "[descendant::*[@resource-id='com.view9.foreveryng:id/textView6']]" \
       "[descendant::*[@resource-id='com.view9.foreveryng:id/wish_list']]"
     )
-    @products_cards = Elements.new(
-      :xpath,
+    @products_cards = xpath(
       "//*[@resource-id='com.view9.foreveryng:id/product_r_view']" \
       "//*[@resource-id='com.view9.foreveryng:id/materialCardView2']"
     )
-    @toast = Elements.new(:id, 'tvToastMsgId')
+    @toast = id('tvToastMsgId')
 
     expected_element(@fully_visible_products)
   end
@@ -41,8 +39,6 @@ class ProductScreen < BaseScreen
 
       wait_for_toast_to_disapear
 
-      # product_cards = @products_cards.get_multiple_elements
-      # scroll_from_top_to_top(product_cards[2], product_cards[0])
       scroll_down(ratio: 0.45)
       counter += 2
     end
@@ -64,8 +60,8 @@ class ProductScreen < BaseScreen
   end
 
   def return_to_home
-    $driver.back
-    $driver.back
+    @driver.back
+    @driver.back
   end
 
   def wait_for_toast_to_disapear

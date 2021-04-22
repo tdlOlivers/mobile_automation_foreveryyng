@@ -3,10 +3,11 @@
 require_relative '../base_screen'
 
 # Screen
-class ReferCouponScreen < BaseScreen
-  def initialize
-    @skip_referal_button = Elements.new(:id, 'skip_btn')
-    @refer_code_info = Elements.new(:xpath, "//*[contains(@text, 'Use refer code')]")
+class ReferCouponScreen < Base
+  def initialize(driver:)
+    super
+    @skip_referal_button = id('skip_btn')
+    @refer_code_info = xpath("//*[contains(@text, 'Use refer code')]")
 
     expected_element(@refer_code_info)
   end
@@ -16,7 +17,7 @@ class ReferCouponScreen < BaseScreen
 
     case element
     when 'skip_referal_button'
-      VerifyNumberScreen.new.wait_to_load
+      VerifyNumberScreen.new(driver: @driver).wait_to_load
     end
   end
 end

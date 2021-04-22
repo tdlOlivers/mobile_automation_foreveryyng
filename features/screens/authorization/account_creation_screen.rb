@@ -2,14 +2,16 @@
 
 require_relative '../base_screen'
 
-class AccountCreationScreen < BaseScreen
-  def initialize
-    @name_field = Elements.new(:id, 'signup_name')
-    @phone_number_field = Elements.new(:id, 'signup_phone')
-    @email_field = Elements.new(:id, 'signup_email')
-    @password_field = Elements.new(:id, 'signup_password')
-    @password_confirmation_field = Elements.new(:id, 'signup_confirm_password')
-    @confirm_sign_up_button = Elements.new(:id, 'sign_up_btn')
+# Class containing elements and methods for AccountCreationScreen
+class AccountCreationScreen < Base
+  def initialize(driver:)
+    super
+    @name_field = id('signup_name')
+    @phone_number_field = id('signup_phone')
+    @email_field = id('signup_email')
+    @password_field = id('signup_password')
+    @password_confirmation_field = id('signup_confirm_password')
+    @confirm_sign_up_button = id('sign_up_btn')
     expected_element(@confirm_sign_up_button)
   end
 
@@ -18,7 +20,7 @@ class AccountCreationScreen < BaseScreen
 
     case element
     when 'confirm_sign_up_button'
-      ReferCouponScreen.new.wait_to_load
+      ReferCouponScreen.new(driver: @driver).wait_to_load
     end
   end
 
