@@ -7,7 +7,7 @@ class ReferCouponScreen < Base
   def initialize(driver:)
     super
     @skip_referal_button = id('skip_btn')
-    @refer_code_info = xpath("//*[contains(@text, 'Use refer code')]")
+    @refer_code_info = text('Use refer code')
 
     expected_element(@refer_code_info)
   end
