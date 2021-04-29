@@ -15,7 +15,7 @@ Given(/^I sign up with random credentials$/) do
 end
 
 And(/^I go to the (\d). top searched item$/) do |index|
-  @screens.current.click_on_search_field
+  @screens.current.click('search_field')
   @screens.current.open_top_searched_item_by_index(index.to_i)
 end
 
@@ -26,10 +26,6 @@ end
 
 And(/^I return to the home screen$/) do
   @screens.current.return_to_home
-end
-
-And(/^I click on Wishlist tab$/) do
-  @screens.current.open_wishlist_tab
 end
 
 Then(/^I see all items which I previously added to the wishlist$/) do

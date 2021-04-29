@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'timeout'
+require 'pry'
 
 # Class for interacting with mobile test runs
 class MobileRunner
@@ -34,6 +35,9 @@ class MobileRunner
 
   def run_tests(device: nil, tag: nil)
     @device_list.each do |d|
+      p "Did not find device: #{d[:name]}" unless `adb devices`.include?(d[:name])
+      next unless `adb devices`.include?(d[:name])
+
       @threads << Thread.new do
         command = "#{d[:runner_command]} #{"-t #{tag}" unless tag.nil?}"
         p command
